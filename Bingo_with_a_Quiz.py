@@ -75,6 +75,131 @@ class bingo(object):
             print("\n")
             
   
+questions_asked = []
+
+# Generate a random number
+
+def randomNumber_generator(lower_limit, upper_limit):
+    return random.randint(lower_limit, upper_limit)
+
+
+# Get the question
+
+def getQuestion(question_no):
+    question_set = randomNumber_generator(0, 2)
+    question = Questions[question_set][question_no]
+    print(question)
+    answer = input("Your answer: ")
+    answer = int(answer)
+    if (answer == question_no):
+        return True
+    else:
+        return False
+
+
+# Cross out the right answers
+
+def crossOut(number, bingoCard):
+    for i in range(size):
+        for j in range(size):
+            if (bingoCard[i][j] == number):
+                bingoCard[i][j] = 0
+    return bingoCard
+
+
+# Check if card is Bingo
+
+def isBingo(crossCard):
+    count = 0
+    total_count = 0
+    for i in range(size):
+        for j in range(size):
+            if (crossCard[i][j] == 0):
+                count += 1
+        if count == size:
+            total_count += 1
+        count = 0
+    for j in range(size):
+        for i in range(size):
+            if (crossCard[i][j] == 0):
+                count += 1
+        if count == size:
+            total_count += 1
+        count = 0
+    if total_count == 3:
+        return True
+    else:
+        return False
+
+
+# Set the game
+
+print("\t \t \t WELCOME TO THIS GAME OF BINGO WITH A TWIST OF QUIZ......")
+print("\n \t \t \t This is a 2 player game so grab a friend and let's get started....")
+player1 = input("\n Hi! Enter your name Player 1 : ")
+player2 = input("\n Player 2, Hi! Enter your name : ")
+print("\n\n\n")
+print("\n" + player1 + " ,go ahead and enter the values for your bingo card..")
+player1_obj = bingo(player1)
+player1_obj.addTo_bingoCard()
+player1_obj.display()
+time.sleep(5)
+os.system('cls')
+print("\n\n\n")
+print("\n" + player2 + " ,go ahead and enter the values for your bingo card..")
+player2_obj = bingo(player2)
+player2_obj.addTo_bingoCard()
+player2_obj.display()
+time.sleep(5)
+os.system('cls')
+
+
+# Start the game
+
+while (not (isBingo(player1_obj.bingoCard) or isBingo(player2_obj.bingoCard)) and len(questions_asked) < 25):
+    print("List of numbers called: ")
+    print(questions_asked)
+    time.sleep(3)
+    os.system('cls')
+    q = randomNumber_generator(1, 25)
+    if q not in questions_asked:
+        questions_asked.append(q)
+        print("\n\n")
+        print("Turn Player1: " + player1)
+        if (getQuestion(q)):
+            print("\n")
+            print("Yaay.." + player1 + " got it right.. :D")
+            crossOut(q, player1_obj.bingoCard)
+        else:
+            print("\n")
+            print("Oops..Looks like you got it wrong, " + player1)
+        player1_obj.display()
+        time.sleep(2)
+        os.system('cls')
+        print("\n\n")
+        print("Turn Player2: " + player2)
+        if (getQuestion(q)):
+            print("\n")
+            print("Yaay.." + player2 + " got it right.. :D")
+            crossOut(q, player2_obj.bingoCard)
+        else:
+            print("\n")
+            print("Oops..Looks like you got it wrong, " + player2)
+        player2_obj.display()
+        time.sleep(2)
+        os.system('cls')
+        
+        
+# Check who won the game
+
+if (isBingo(player1_obj.bingoCard)):
+    print("\n\n \t \t CONGRATULATIONS....." + player1.upper() +
+          " \n \t \t You are the WINNER of BINGO WITH A TWIST OF QUIZ !!!!")
+elif (isBingo(player2_obj.bingoCard)):
+    print("\n\n \t \t CONGRATULATIONS....." + player2.upper() +
+          " \n \t \t You are the WINNER of BINGO WITH A TWIST OF QUIZ !!!!")
+elif (len(questions_asked) > 24):
+    print("\n\n Oh noo... No one won :( \n Better luck next time...")
 
 
 
