@@ -65,7 +65,7 @@ class bingo(object):
         checkList = []
         for row in range(size):
             for column in range(size):
-                print(f"Row: {row} Column: {column}")
+                print(f"Row: {row+1} Column: {column+1}")
                 a = self.getNumber(checkList)
                 self.bingoCard[row][column] = a
 
