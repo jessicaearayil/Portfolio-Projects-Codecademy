@@ -36,3 +36,45 @@ Questions = [{1: "The only number that can be divided by itself", 2: "An even pr
               20: "The atomic number of Calcium ", 21: "The Royal Salute",
               22: "Letters in the Hebrew Alphabet", 23: "Seconds for blood to circulate the body(average)",
               24: "Total elements that make up the human body", 25: "Quarter of 100"}]
+
+size = 5
+
+# Class definition
+
+class bingo(object):
+    checklist = []
+    bingoCard = [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0],
+                 [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
+
+    def __init__(self, player_name):
+        self.player_name = player_name
+
+    def getNumber(self, checklist):
+        a = int(input("Enter number between 1 and 25: "))
+        if a in checklist:
+            print("This is already in the Bingo Card")
+            return self.getNumber(checklist)
+        else:
+            checklist.append(a)
+        if a < 26 and a > 0:
+            return a
+        else:
+            return self.getNumber(checklist)
+
+    def addTo_bingoCard(self):
+        checkList = []
+        for row in range(size):
+            for column in range(size):
+                print(f"Row: {row} Column: {column}")
+                a = self.getNumber(checkList)
+                self.bingoCard[row][column] = a
+
+    def display(self):
+        for row in self.bingoCard:
+            print(row)
+            print("\n")
+            
+  
+
+
+
